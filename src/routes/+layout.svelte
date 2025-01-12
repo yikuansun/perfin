@@ -38,7 +38,7 @@
     #mainMobile {
         position: fixed;
         width: calc(min(700px, 100vw)); /* 100vw */
-        height: 100vh;
+        height: 100%;
         left: 50vw;
         top: 0;
         transform: translateX(-50%);
@@ -67,3 +67,10 @@
         padding: 10px;
     }
 </style>
+
+<svelte:head>
+    <!-- add title and favicon -->
+
+    <!-- Prevent zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</svelte:head>
