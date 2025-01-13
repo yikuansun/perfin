@@ -31,7 +31,7 @@ class UserData {
     readFromLocalStorage() {
         if (window.localStorage.getItem("dataExists")) {
             this.balance = parseFloat(window.localStorage.getItem("balance") || "0");
-            this.transactions = JSON.parse(window.localStorage.getItem("balance") || "[]");
+            this.transactions = JSON.parse(window.localStorage.getItem("transactions") || "[]");
             this.recurrences = JSON.parse(window.localStorage.getItem("recurrences") || "[]");
         }
     }
