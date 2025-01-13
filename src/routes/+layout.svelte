@@ -58,6 +58,19 @@
         box-shadow: 0 0 5px grey;
     }
 
+    /* navbar icons */
+    #mainMobile #navigation a {
+        display: inline-block;
+        height: 100%;
+        width: calc(100% / 5 - 5px);
+        box-sizing: border-box;
+        font-size: 10px;
+        vertical-align: top;
+        color: grey;
+        text-decoration: none; /* prevent it from looking like a hyperlink */
+        text-transform: capitalize; /* home -> Home; settings -> Settings */
+    }
+
     #mainMobile #content {
         width: 100%;
         height: calc(100% - 50px); /* compensate for navbar height */
