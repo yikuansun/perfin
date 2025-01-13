@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+    import { page } from "$app/stores";
 
     /** @type {("mobile" | "desktop")} */
     let layout = "mobile"; // mobile or desktop? For responsive design
@@ -19,6 +20,29 @@
         // change layout when window resized - for responsive design
         window.addEventListener("resize", setLayout);
     });
+
+    let navPages = [
+        {
+            title: "Settings",
+            path: "/settings",
+        },
+        {
+            title: "Transactions",
+            path: "/transactions",
+        },
+        {
+            title: "Home",
+            path: "/",
+        },
+        {
+            title: "Summary",
+            path: "/summary",
+        },
+        {
+            title: "Help",
+            path: "/help",
+        },
+    ];
 </script>
 
 <div id="mainMobile">
@@ -26,11 +50,12 @@
         <slot></slot>
     </div>
     <div id="navigation">
-        <a href="/settings">settings</a>
-        <a href="/transactions">transactions</a>
-        <a href="/">home</a>
-        <a href="/summary">summary</a>
-        <a href="/help">help</a>
+        {#each navPages as navItem}
+            <a href={navItem.path}
+                style:color={($page.url.pathname == navItem.path)?"steelblue":"grey"}>
+                {navItem.title}
+            </a>
+        {/each}
     </div>
 </div>
 
@@ -64,7 +89,7 @@
         height: 100%;
         width: calc(100% / 5 - 5px);
         box-sizing: border-box;
-        font-size: 10px;
+        font-size: 9px;
         vertical-align: top;
         color: grey;
         text-decoration: none; /* prevent it from looking like a hyperlink */
