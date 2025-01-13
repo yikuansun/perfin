@@ -11,13 +11,19 @@
 </script>
 
 <button on:click={() => {
+    let date = new Date();
     data.transactions = [...data.transactions, {
-        date: "yikuan",
-    }]
+        date: (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
+        quantity: 20,
+    }];
     data.saveToLocalStorage(); // save after modification
 }}>new transaction</button>
 
 <h2>Past transactions</h2>
 {#each data.transactions as transaction}
-    <p>hi</p>
+    <p>
+        Date: {transaction["date"]} <br />
+        Transaction type: {(transaction.quantity >= 0)?"income":"expense"} <br />
+        Amount: {Math.abs(transaction.quantity)}
+    </p>
 {/each}

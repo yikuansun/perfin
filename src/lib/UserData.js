@@ -4,7 +4,7 @@
 class UserData {
     /** @type {number} */
     balance;
-    /** @type {Object[]} */
+    /** @type {Array.<{ date: string, quantity: number, }>} */
     transactions;
     /** @type {Object[]} */
     recurrences;
