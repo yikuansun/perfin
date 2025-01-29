@@ -52,7 +52,7 @@
     <div id="navigation">
         {#each navPages as navItem}
             <a href={navItem.path}
-                style:color={($page.url.pathname == navItem.path)?"steelblue":"grey"}>
+                style:color={($page.url.pathname == navItem.path)?"deepskyblue":"grey"}>
                 {navItem.title}
             </a>
         {/each}
@@ -67,8 +67,9 @@
         left: 50vw;
         top: 0;
         transform: translateX(-50%);
-        background-color: #EEEEEE;
+        background-color: #1B1B1B;
         overflow-x: hidden;
+        color: azure;
     }
 
     #mainMobile #navigation {
@@ -79,8 +80,8 @@
         height: 50px;
         line-height: 50px;
         text-align: center;
-        background-color: #EEEEEE;
-        box-shadow: 0 0 5px grey;
+        background-color: #222222;
+        box-shadow: 0 0 5px steelblue;
     }
 
     /* navbar icons */
@@ -103,6 +104,19 @@
         /* slight margins */
         box-sizing: border-box;
         padding: 10px;
+    }
+
+    :global(button) {
+        background-color: #363636;
+        color: azure;
+        padding: 6px 12px;
+        border: 0;
+        border-radius: 4px;
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    :global(button:active) {
+        background-color: dimgrey;
     }
 </style>
 
