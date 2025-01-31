@@ -3,7 +3,7 @@
     import { page } from "$app/stores";
 
     /** @type {("mobile" | "desktop")} */
-    let layout = "mobile"; // mobile or desktop? For responsive design
+    let layout = "desktop"; // mobile or desktop? For responsive design
 
     /**
      * Set variable layout based on dimensions of screen.
@@ -45,6 +45,7 @@
     ];
 </script>
 
+{#if layout == "mobile"}
 <div id="mainMobile">
     <div id="content">
         <slot></slot>
@@ -58,11 +59,26 @@
         {/each}
     </div>
 </div>
+{:else if layout == "desktop"}
+<div id="mainDesktop">
+    <div id="navigation">
+        {#each navPages as navItem}
+            <a href={navItem.path}
+                style:color={($page.url.pathname == navItem.path)?"deepskyblue":"grey"}>
+                {navItem.title}
+            </a>
+        {/each}
+    </div>
+    <div id="content">
+        <slot></slot>
+    </div>
+</div>
+{/if}
 
 <style>
     #mainMobile {
         position: fixed;
-        width: calc(min(700px, 100vw)); /* 100vw */
+        width: 100vw;
         height: 100%;
         left: 50vw;
         top: 0;
@@ -106,6 +122,41 @@
         padding: 10px;
     }
 
+    #mainDesktop {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        background-color: #1B1B1B;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        color: azure;
+        scrollbar-width: thin;
+        scrollbar-color: dimgrey #333333;
+    }
+
+    #mainDesktop #content {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+    }
+
+    #mainDesktop #navigation {
+        position: sticky;
+        top: 0;
+        box-sizing: border-box;
+        padding: 16px;
+        background-color: #111111;
+        box-shadow: 0 -4px 14px black;
+        text-align: center;
+    }
+    #mainDesktop #navigation a {
+        text-decoration: none;
+        margin: 0 10px;
+        transition: color 0.3s;
+    }
+
     :global(button) {
         background-color: #363636;
         color: azure;
@@ -142,6 +193,20 @@
         border-top: 1px solid #333333;
         box-shadow: 0 4px 14px black;
                     /*0 -100vh 100vh 100vh hsla(0deg, 0%, 20%, 80%); /* greywall */
+    }
+
+    #mainDesktop :global(.modal) {
+        position: fixed;
+        top: 50vh;
+        left: 50vw;
+        transform: translate(-50%, -50%);
+        z-index: 123; /* show in front of menubar */
+        box-sizing: border-box;
+        padding: 16px 24px;
+        background-color: #1B1B1B;
+        border: 1px solid #333333;
+        border-radius: 5px;
+        box-shadow: 0 7px 14px hsla(0deg, 0%, 0%, 50%);
     }
 
     /* to put behind modals */

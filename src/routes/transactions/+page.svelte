@@ -35,6 +35,7 @@
     <button class="greywall" transition:fade={{ duration: 250, }}
         on:click={() => { createModalOpen = false }}></button>
     <div class="modal" transition:slide={{ duration: 500, }}>
+        <h2 style:margin-top="4px" style:margin-bottom="14px">Create new transaction</h2>
         Date: <input type="date" bind:value={createModalData["dateString"]} /> <br />
         Type:
         <select bind:value={createModalData["transactionType"]}>
