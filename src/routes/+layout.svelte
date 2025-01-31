@@ -113,10 +113,49 @@
         border: 0;
         border-radius: 4px;
         transition: background-color 0.2s, box-shadow 0.2s;
+        margin: 2px;
     }
 
     :global(button:active) {
         background-color: dimgrey;
+    }
+
+    :global(input[type=text], input[type=number], input[type=date], select) {
+        background-color: #111111;
+        color: azure;
+        padding: 5px 10px;
+        border: 1px solid #333333;
+        border-radius: 4px;
+        outline: none!important;
+        margin: 2px;
+    }
+
+    #mainMobile :global(.modal) {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 123; /* show in front of menubar */
+        width: 100vw;
+        box-sizing: border-box;
+        padding: 10px;
+        background-color: #1B1B1B;
+        border-top: 1px solid #333333;
+        box-shadow: 0 4px 14px black;
+                    /*0 -100vh 100vh 100vh hsla(0deg, 0%, 20%, 80%); /* greywall */
+    }
+
+    /* to put behind modals */
+    :global(.greywall) {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 121; /* in between page content & modal */
+        width: 100vw;
+        height: 100vh;
+        background-color: hsla(0deg, 0%, 20%, 80%)!important;
+        /* For accessibility purposes, I've made greywalls button elements.
+            Therefore, the default button properties must be removed. */
+        display: block; border: 0; margin: 0; padding: 0; border-radius: 0;
     }
 </style>
 
