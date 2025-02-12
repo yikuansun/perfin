@@ -140,9 +140,7 @@
         width: calc(min(100%, 800px));
         box-sizing: border-box;
         padding: 20px;
-        position: relative;
-        left: 50vw;
-        transform: translateX(-50%);
+        margin: 0 calc(50vw - min(100%, 800px) / 2);
     }
 
     #mainDesktop #navigation {
