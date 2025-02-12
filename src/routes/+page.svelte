@@ -14,7 +14,7 @@
 <h1>YOUR BALANCE: {data.balance}</h1>
 
 <div style:width="100%">
-    <Chart type="bar" data={{
+    <Chart type="line" data={{
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
                 label: '# of Votes',
