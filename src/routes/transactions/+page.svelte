@@ -21,15 +21,7 @@
     };
 </script>
 
-<button on:click={() => {
-    /*let date = new Date();
-    data.transactions = [...data.transactions, {
-        date: (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
-        quantity: 20,
-    }];
-    data.saveToLocalStorage(); // save after modification*/
-    createModalOpen = true;
-}}>new transaction</button>
+<button on:click={() => { createModalOpen = true; }}>new transaction</button>
 
 {#if createModalOpen}
     <button class="greywall" transition:fade={{ duration: 250, }}
@@ -53,6 +45,7 @@
                 date: dateYMD[1] + "/" + dateYMD[2] + "/" + dateYMD[0],
                 quantity: quantityReal,
             }];
+            data.balance += quantityReal; // update balance
             data.saveToLocalStorage(); // save after modification
             // close & reset modal
             createModalData = {

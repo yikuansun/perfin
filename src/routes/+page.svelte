@@ -7,6 +7,7 @@
 
     onMount(() => {
         data.readFromLocalStorage();
+        data = data; // svelte only updates after assignment
     });
 </script>
 
