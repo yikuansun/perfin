@@ -137,9 +137,12 @@
     }
 
     #mainDesktop #content {
-        width: 100%;
+        width: calc(min(100%, 800px));
         box-sizing: border-box;
         padding: 20px;
+        position: relative;
+        left: 50vw;
+        transform: translateX(-50%);
     }
 
     #mainDesktop #navigation {
