@@ -12,7 +12,7 @@
 
 <h1>YOUR BALANCE: {data.balance}</h1>
 
-<div style:width="calc(min(100%, 700px))">
+<div style:width="100%">
     <Chart type="bar" data={{
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
