@@ -1,7 +1,8 @@
 <script>
     import { onMount } from "svelte";
     import UserData from "$lib/UserData";
-    import Chart from "$lib/components/Chart.svelte";
+    import { Line } from "svelte-chartjs";
+    import "chart.js/auto";
 
     let data = new UserData();
 
@@ -14,7 +15,7 @@
 <h1>YOUR BALANCE: {data.balance}</h1>
 
 <div style:width="100%">
-    <Chart type="line" data={{
+    <Line data={{
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
                 label: '# of Votes',
@@ -27,5 +28,5 @@
                     beginAtZero: true,
                 },
             },
-        }}></Chart>
+        }} />
 </div>
