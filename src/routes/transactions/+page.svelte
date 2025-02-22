@@ -44,6 +44,21 @@
         data.saveToLocalStorage(); // save after modification
 
     }
+
+    /**
+     * Utility function for sorting transactions by date, so they can be displayed in order on the page
+     * @param {{ date: string, quantity: number, nickname: string, }} transaction1 first transaction
+     * @param {{ date: string, quantity: number, nickname: string, }} transaction2 second transaction
+     * @returns {1 | -1} TRUE if transaction1 occured before transaction2; FALSE if otherwise (.sort does not take booleans, only numbers)
+     */
+    function sortingCompareFn(transaction1, transaction2) {
+        let date1 = transaction1.date.split("/").map((x) => parseInt(x)); // mm/dd/yyyy
+        let date2 = transaction2.date.split("/").map((x) => parseInt(x)); // mm/dd/yyyy
+        if (date1[2] != date2[2]) return (date1[2] > date2[2])?-1:1; // if years are different, sort by year, otherwise
+        if (date1[0] != date2[0]) return (date1[0] > date2[0])?-1:1; // if months are different, sort by month, otherwise
+        if (date1[1] != date2[1]) return (date1[1] > date2[1])?-1:1; // if days are different, sort by day :)
+        return 1;
+    }
 </script>
 
 <button on:click={() => { createModalOpen = true; }}>new transaction</button>
@@ -77,7 +92,7 @@
 {/if}
 
 <h2>Past transactions</h2>
-{#each data.transactions as transaction}
+{#each data.transactions.toSorted(sortingCompareFn) as transaction}
     <p>
         {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
         Date: {transaction["date"]} <br />
