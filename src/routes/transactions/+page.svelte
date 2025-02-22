@@ -21,6 +21,29 @@
         amount: null,
         nickName: ""
     };
+
+    /**
+     * Create a transaction and save to UserData. Called when modal submit button pressed.
+     * @param {string | null} dateString the date of the transaction, in HTML Date Input format (yyyy-mm-dd)
+     * @param {number | null} amount the magnitude of the transaction (absolute value)
+     * @param {"income" | "expense"} type decide if the amount be added to or substracted from balance
+     * @param {string} nickname title of the transaction (optional)
+     */
+    function createTransaction(dateString, amount, type, nickname="") {
+        // the HTML date input returns format yyyy-mm-dd - must be changed to mm/dd/yyyy
+        let dateYMD = (dateString || "2025-01-23").split("-"); // 01/23/2025 is the default value
+        // expense is treated the same as negative income
+        let quantityReal = amount || 0;
+        if (type == "expense") quantityReal *= -1;
+        data.transactions = [...data.transactions, {
+            date: dateYMD[1] + "/" + dateYMD[2] + "/" + dateYMD[0],
+            quantity: quantityReal,
+            nickname: nickname,
+        }];
+        data.balance += quantityReal; // update balance
+        data.saveToLocalStorage(); // save after modification
+
+    }
 </script>
 
 <button on:click={() => { createModalOpen = true; }}>new transaction</button>
@@ -39,26 +62,16 @@
         Amount: <input type="number" min={0} max={10000} bind:value={createModalData["amount"]} /> <br />
         Title (optional): <input type="text" bind:value={createModalData["nickName"]} /> <br />
         <button on:click={() => {
-            // the HTML date input returns format yyyy-mm-dd - must be changed to mm/dd/yyyy
-            let dateYMD = (createModalData["dateString"] || "2025-01-23").split("-");
-            // expense is treated the same as negative income
-            let quantityReal = createModalData["amount"] || 0;
-            if (createModalData["transactionType"] == "expense") quantityReal *= -1;
-            data.transactions = [...data.transactions, {
-                date: dateYMD[1] + "/" + dateYMD[2] + "/" + dateYMD[0],
-                quantity: quantityReal,
-                nickname: createModalData["nickName"],
-            }];
-            data.balance += quantityReal; // update balance
-            data.saveToLocalStorage(); // save after modification
+            // add the transaction to user data
+            createTransaction(createModalData["dateString"], createModalData["amount"], createModalData["transactionType"], createModalData["nickName"]);
             // close & reset modal
+            createModalOpen = false;
             createModalData = {
                 dateString: null,
                 transactionType: "income",
                 amount: null,
                 nickName: "",
             };
-            createModalOpen = false;
         }}>Add Transaction</button>
     </div>
 {/if}
