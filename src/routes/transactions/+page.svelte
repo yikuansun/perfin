@@ -13,11 +13,13 @@
     let createModalOpen = false;
     /** @type {{ dateString: string | null,
      *          transactionType: "income" | "expense",
-     *          amount: number | null }} */
+     *          amount: number | null,
+     *          "nickName": string }} */
     let createModalData = {
         dateString: null,
         transactionType: "income",
         amount: null,
+        nickName: ""
     };
 </script>
 
@@ -35,6 +37,7 @@
             <option>expense</option>
         </select> <br />
         Amount: <input type="number" min={0} max={10000} bind:value={createModalData["amount"]} /> <br />
+        Title (optional): <input type="text" bind:value={createModalData["nickName"]} /> <br />
         <button on:click={() => {
             // the HTML date input returns format yyyy-mm-dd - must be changed to mm/dd/yyyy
             let dateYMD = (createModalData["dateString"] || "2025-01-23").split("-");
@@ -44,6 +47,7 @@
             data.transactions = [...data.transactions, {
                 date: dateYMD[1] + "/" + dateYMD[2] + "/" + dateYMD[0],
                 quantity: quantityReal,
+                nickname: createModalData["nickName"],
             }];
             data.balance += quantityReal; // update balance
             data.saveToLocalStorage(); // save after modification
@@ -52,6 +56,7 @@
                 dateString: null,
                 transactionType: "income",
                 amount: null,
+                nickName: "",
             };
             createModalOpen = false;
         }}>Add Transaction</button>
@@ -61,6 +66,7 @@
 <h2>Past transactions</h2>
 {#each data.transactions as transaction}
     <p>
+        {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
         Date: {transaction["date"]} <br />
         Transaction type: {(transaction.quantity > 0)?"income":"expense"} <br />
         Amount: {Math.abs(transaction.quantity)}
