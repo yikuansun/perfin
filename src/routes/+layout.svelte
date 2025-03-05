@@ -53,7 +53,7 @@
     <div id="navigation">
         {#each navPages as navItem}
             <a href={navItem.path}
-                style:color={($page.url.pathname == navItem.path)?"deepskyblue":"grey"}>
+                style:color={($page.url.pathname == navItem.path)?"hotpink":"grey"}>
                 {navItem.title}
             </a>
         {/each}
@@ -64,7 +64,7 @@
     <div id="navigation">
         {#each navPages as navItem}
             <a href={navItem.path}
-                style:color={($page.url.pathname == navItem.path)?"deepskyblue":"grey"}>
+                style:color={($page.url.pathname == navItem.path)?"hotpink":"grey"}>
                 {navItem.title}
             </a>
         {/each}
@@ -97,7 +97,7 @@
         line-height: 50px;
         text-align: center;
         background-color: #222222;
-        box-shadow: 0 0 5px steelblue;
+        box-shadow: 0 0 5px deeppink;
     }
 
     /* navbar icons */

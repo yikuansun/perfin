@@ -21,6 +21,7 @@
                 label: '# of Votes',
                 data: [12, 19, 3, 5, 2, 3],
                 borderWidth: 1,
+                borderColor: "hotpink",
             }],
         }} options={{
             scales: {
