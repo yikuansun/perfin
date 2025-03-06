@@ -3,12 +3,28 @@
     import UserData from "$lib/UserData";
     import { Line } from "svelte-chartjs";
     import "chart.js/auto";
+    import moment from "moment";
+    import "chartjs-adapter-moment";
 
     let data = new UserData();
+
+    /** @type {{ x: string, y: number, timeNumeric: number }[]} */
+    let graphData = [];
 
     onMount(() => {
         data.readFromLocalStorage();
         data = data; // svelte only updates after assignment
+
+        // convert transactions to graphData
+        for (let transaction of data.transactions) {
+            graphData.push({
+                x: moment(transaction.date, "MM/DD/YYYY").format("YYYY-MM-DD"),
+                y: transaction.quantity,
+                timeNumeric: moment(transaction.date, "MM/DD/YYYY").unix(),
+            });
+        }
+        graphData.sort((a, b) => a.timeNumeric - b.timeNumeric); // sort by date
+        graphData = graphData; // svelte only updates after assignment
     });
 </script>
 
@@ -16,18 +32,24 @@
 
 <div style:width="100%">
     <Line data={{
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: graphData,
                 borderWidth: 1,
                 borderColor: "hotpink",
             }],
         }} options={{
             scales: {
-                y: {
-                    beginAtZero: true,
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "day",
+                        displayFormats: { day: "MMM DD" }
+                    },
                 },
+                /*y: {
+                    beginAtZero: true,
+                },*/
             },
         }} />
 </div>
