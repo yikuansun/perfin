@@ -72,6 +72,23 @@
 View transactions between <br />
 <input type="date" bind:value={selectedStartDate} />
 and <input type="date" bind:value={selectedEndDate} />
+<br />
+<button on:click={() => {
+    selectedStartDate = moment().subtract(1, "week").format("YYYY-MM-DD");
+    selectedEndDate = moment().format("YYYY-MM-DD");
+}} style:font-size="11px">Last week</button>
+<button on:click={() => {
+    selectedStartDate = moment().subtract(1, "month").format("YYYY-MM-DD");
+    selectedEndDate = moment().format("YYYY-MM-DD");
+}} style:font-size="11px">Last month</button>
+<button on:click={() => {
+    selectedStartDate = moment().subtract(3, "month").format("YYYY-MM-DD");
+    selectedEndDate = moment().format("YYYY-MM-DD");
+}} style:font-size="11px">Last 3 months</button>
+<button on:click={() => {
+    selectedStartDate = moment().subtract(1, "year").format("YYYY-MM-DD");
+    selectedEndDate = moment().format("YYYY-MM-DD");
+}} style:font-size="11px">Last year</button>
 
 <!--<h2>Transactions</h2>
 {#each getTransactionsInDateRange(yyyymmddToMmddyyyy(selectedStartDate), yyyymmddToMmddyyyy(selectedEndDate)) as transaction}
@@ -83,7 +100,7 @@ and <input type="date" bind:value={selectedEndDate} />
     </p>
 {/each}-->
 
-<h3>Incomes</h3>
+<h3>Incomes and Expenses in Selected Time Period</h3>
 <div style:width="100%">
     <Line data={{
             datasets: [
@@ -117,3 +134,7 @@ and <input type="date" bind:value={selectedEndDate} />
             },
         }} />
 </div>
+<button on:click={() => {
+    data.readFromLocalStorage();
+    data = data; // make sure svelte updates it in the page
+}}>Refresh data</button>
