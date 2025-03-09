@@ -108,13 +108,13 @@ and <input type="date" bind:value={selectedEndDate} />
                     label: "Incomes",
                     data: incomeGraphData,
                     borderWidth: 1,
-                    borderColor: "hotpink",
+                    borderColor: "deepskyblue",
                 },
                 {
                     label: "Expenses",
                     data: expenseGraphData,
                     borderWidth: 1,
-                    borderColor: "deepskyblue",
+                    borderColor: "hotpink",
                 },
             ],
         }} options={{
