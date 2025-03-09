@@ -9,7 +9,8 @@
     let data = new UserData();
 
     /** @type {{ x: string, y: number, timeNumeric: number }[]} */
-    let graphData = [];
+    let incomeGraphData = [];
+    let expenseGraphData = [];
 
     onMount(() => {
         data.readFromLocalStorage();
@@ -17,15 +18,29 @@
 
         // convert transactions to graphData
         for (let transaction of data.transactions) {
-            graphData.push({
-                x: moment(transaction.date, "MM/DD/YYYY").format("YYYY-MM-DD"),
-                y: transaction.quantity,
-                timeNumeric: moment(transaction.date, "MM/DD/YYYY").unix(),
-            });
+            if (transaction.quantity > 0) {
+                incomeGraphData.push({
+                    x: moment(transaction.date, "MM/DD/YYYY").format("YYYY-MM-DD"),
+                    y: transaction.quantity,
+                    timeNumeric: moment(transaction.date, "MM/DD/YYYY").unix(),
+                });
+            }
+            else {
+                expenseGraphData.push({
+                    x: moment(transaction.date, "MM/DD/YYYY").format("YYYY-MM-DD"),
+                    y: Math.abs(transaction.quantity),
+                    timeNumeric: moment(transaction.date, "MM/DD/YYYY").unix(),
+                });
+            }
         }
-        graphData.sort((a, b) => a.timeNumeric - b.timeNumeric); // sort by date
 
-        graphData = graphData; // svelte only updates after assignment
+        // make sure graph points are in chronological order
+        incomeGraphData.sort((a, b) => a.timeNumeric - b.timeNumeric);
+        expenseGraphData.sort((a, b) => a.timeNumeric - b.timeNumeric);
+
+        // trigger update in svelte
+        incomeGraphData = incomeGraphData;
+        expenseGraphData = expenseGraphData;
     });
 
     /**
@@ -68,14 +83,23 @@ and <input type="date" bind:value={selectedEndDate} />
     </p>
 {/each}-->
 
+<h3>Incomes</h3>
 <div style:width="100%">
     <Line data={{
-            datasets: [{
-                label: "Income/Expenses",
-                data: graphData,
-                borderWidth: 1,
-                borderColor: "hotpink",
-            }],
+            datasets: [
+                {
+                    label: "Incomes",
+                    data: incomeGraphData,
+                    borderWidth: 1,
+                    borderColor: "hotpink",
+                },
+                {
+                    label: "Expenses",
+                    data: expenseGraphData,
+                    borderWidth: 1,
+                    borderColor: "deepskyblue",
+                },
+            ],
         }} options={{
             scales: {
                 x: {
@@ -87,9 +111,9 @@ and <input type="date" bind:value={selectedEndDate} />
                     min: selectedStartDate,
                     max: selectedEndDate,
                 },
-                /*y: {
+                y: {
                     beginAtZero: true,
-                },*/
+                },
             },
         }} />
 </div>
