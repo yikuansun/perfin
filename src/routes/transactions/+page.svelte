@@ -34,29 +34,17 @@
         // expense is treated the same as negative income
         let quantityReal = amount || 0;
         if (type == "expense") quantityReal *= -1;
-        data.transactions = [...data.transactions, {
+        // place the new transaction in the correct place in the array
+        let transactionsBefore = data.transactions.filter((transaction) => moment(transaction.date, "MM/DD/YYYY").isSameOrBefore(moment(dateString, "YYYY-MM-DD"), "day"));
+        let transactionsAfter = data.transactions.filter((transaction) => moment(transaction.date, "MM/DD/YYYY").isSameOrAfter(moment(dateString, "YYYY-MM-DD"), "day"));
+        data.transactions = [...transactionsAfter, {
             date: moment(dateString, "YYYY-MM-DD").format("MM/DD/YYYY"),
             quantity: quantityReal,
             nickname: nickname,
-        }];
+        }, ...transactionsBefore];
         data.balance += quantityReal; // update balance
         data.saveToLocalStorage(); // save after modification
 
-    }
-
-    /**
-     * Utility function for sorting transactions by date, so they can be displayed in order on the page
-     * @param {{ date: string, quantity: number, nickname: string, }} transaction1 first transaction
-     * @param {{ date: string, quantity: number, nickname: string, }} transaction2 second transaction
-     * @returns {1 | -1} TRUE if transaction1 occured before transaction2; FALSE if otherwise (.sort does not take booleans, only numbers)
-     */
-    function sortingCompareFn(transaction1, transaction2) {
-        let date1 = transaction1.date.split("/").map((x) => parseInt(x)); // mm/dd/yyyy
-        let date2 = transaction2.date.split("/").map((x) => parseInt(x)); // mm/dd/yyyy
-        if (date1[2] != date2[2]) return (date1[2] > date2[2])?-1:1; // if years are different, sort by year, otherwise
-        if (date1[0] != date2[0]) return (date1[0] > date2[0])?-1:1; // if months are different, sort by month, otherwise
-        if (date1[1] != date2[1]) return (date1[1] > date2[1])?-1:1; // if days are different, sort by day :)
-        return 1;
     }
 
     let editModalOpen = false;
