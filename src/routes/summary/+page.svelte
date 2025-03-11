@@ -14,11 +14,16 @@
     /** @type {{ x: string, y: number, timeNumeric: number }[]} */
     let expenseGraphData = [];
 
+    /** @type {{ x: string, y: number, timeNumeric: number }[]} */
+    let balanceGraphData = [];
+
     onMount(() => {
         data.readFromLocalStorage();
         data = data; // make sure svelte updates it in the page
 
         // convert transactions to graphData
+        incomeGraphData = [];
+        expenseGraphData = [];
         for (let transaction of data.transactions) {
             if (transaction.quantity > 0) {
                 incomeGraphData.push({
@@ -43,6 +48,26 @@
         // trigger update in svelte
         incomeGraphData = incomeGraphData;
         expenseGraphData = expenseGraphData;
+
+        // calculate balance after each transaction
+        balanceGraphData = [];
+        let balance = 0;
+        for (let transaction of data.transactions.toReversed()) {
+            balance += transaction.quantity; // income/expense baked into value (positive/negative)
+            balanceGraphData.push({
+                x: moment(transaction.date, "MM/DD/YYYY").format("YYYY-MM-DD"),
+                y: balance,
+                timeNumeric: moment(transaction.date, "MM/DD/YYYY").unix(),
+            });
+        }
+        // display today's balance at the end of the graph
+        balanceGraphData.push({
+            x: moment().format("YYYY-MM-DD"), // current date
+            y: balance,
+            timeNumeric: moment().unix(),
+        });
+        balanceGraphData.sort((a, b) => a.timeNumeric - b.timeNumeric);
+        balanceGraphData = balanceGraphData; // trigger update in svelte
     });
 
     /**
@@ -136,7 +161,30 @@ and <input type="date" bind:value={selectedEndDate} />
             },
         }} />
 </div>
-<button on:click={() => {
-    data.readFromLocalStorage();
-    data = data; // make sure svelte updates it in the page
-}}>Refresh data</button>
+
+<h3>Balance Over Time</h3>
+<div style:width="100%">
+    <Line data={{
+            datasets: [{
+                label: "Balance",
+                data: balanceGraphData,
+                borderWidth: 1,
+                borderColor: "hotpink",
+            }],
+        }} options={{
+            scales: {
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "day",
+                        displayFormats: { day: "MMM DD" }
+                    },
+                    min: selectedStartDate,
+                    max: selectedEndDate,
+                },
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }} />
+</div>
