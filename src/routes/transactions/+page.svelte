@@ -36,7 +36,7 @@
         if (type == "expense") quantityReal *= -1;
         // place the new transaction in the correct place in the array
         let transactionsBefore = data.transactions.filter((transaction) => moment(transaction.date, "MM/DD/YYYY").isSameOrBefore(moment(dateString, "YYYY-MM-DD"), "day"));
-        let transactionsAfter = data.transactions.filter((transaction) => moment(transaction.date, "MM/DD/YYYY").isSameOrAfter(moment(dateString, "YYYY-MM-DD"), "day"));
+        let transactionsAfter = data.transactions.filter((transaction) => moment(transaction.date, "MM/DD/YYYY").isAfter(moment(dateString, "YYYY-MM-DD"), "day"));
         data.transactions = [...transactionsAfter, {
             date: moment(dateString, "YYYY-MM-DD").format("MM/DD/YYYY"),
             quantity: quantityReal,
