@@ -37,12 +37,12 @@
         // place the new transaction in the correct place in the array
         let transactionsBefore = data.transactions.filter((transaction) => moment(transaction.date, "MM/DD/YYYY").isSameOrBefore(moment(dateString, "YYYY-MM-DD"), "day"));
         let transactionsAfter = data.transactions.filter((transaction) => moment(transaction.date, "MM/DD/YYYY").isAfter(moment(dateString, "YYYY-MM-DD"), "day"));
+        // insert transaction into correct place in array
         data.transactions = [...transactionsAfter, {
             date: moment(dateString, "YYYY-MM-DD").format("MM/DD/YYYY"),
             quantity: quantityReal,
             nickname: nickname,
         }, ...transactionsBefore];
-        data.balance += quantityReal; // update balance
         data.saveToLocalStorage(); // save after modification
 
     }
@@ -78,7 +78,6 @@
             quantity: quantityReal,
             nickname: nickname,
         };
-        data.balance += quantityReal; // update balance
         data.saveToLocalStorage(); // save after modification
     }
 

@@ -5,6 +5,7 @@
     import "chart.js/auto";
     import moment from "moment";
     import "chartjs-adapter-moment";
+    import { get } from "svelte/store";
 
     let data = new UserData();
 
@@ -25,10 +26,23 @@
         }
         graphData.sort((a, b) => a.timeNumeric - b.timeNumeric); // sort by date
         graphData = graphData; // svelte only updates after assignment
+
+        getBalance();
     });
+
+    let balance = 0;
+    /**
+     * Calculate total balance based on past transactions
+     */
+    function getBalance() {
+        balance = 0;
+        for (let transaction of data.transactions) {
+            balance += transaction.quantity;
+        }
+    }
 </script>
 
-<h1>YOUR BALANCE: {data.balance}</h1>
+<h1>YOUR BALANCE: {balance}</h1>
 
 <div style:width="100%">
     <Line data={{

@@ -2,15 +2,12 @@
  * Store all user data in a comprehensive object, which can be read from or written to local storage in any page of the app.
  */
 class UserData {
-    /** @type {number} */
-    balance;
     /** @type {Array.<{ date: string, quantity: number, nickname: string, }>} */
     transactions;
     /** @type {Object[]} */
     recurrences;
 
     constructor() {
-        this.balance = 0;
         this.transactions = [];
         this.recurrences = [];
     }
@@ -20,7 +17,6 @@ class UserData {
      */
     saveToLocalStorage() {
         window.localStorage.setItem("dataExists", "true");
-        window.localStorage.setItem("balance", this.balance + "");
         window.localStorage.setItem("transactions", JSON.stringify(this.transactions));
         window.localStorage.setItem("recurrences", JSON.stringify(this.recurrences));
     }
@@ -30,7 +26,6 @@ class UserData {
      */
     readFromLocalStorage() {
         if (window.localStorage.getItem("dataExists")) {
-            this.balance = parseFloat(window.localStorage.getItem("balance") || "0");
             this.transactions = JSON.parse(window.localStorage.getItem("transactions") || "[]");
             this.recurrences = JSON.parse(window.localStorage.getItem("recurrences") || "[]");
         }
@@ -41,7 +36,6 @@ class UserData {
      */
     purgeLocalStorage() {
         window.localStorage.removeItem("dataExists");
-        window.localStorage.removeItem("balance");
         window.localStorage.removeItem("transactions");
         window.localStorage.removeItem("recurrences");
     }
