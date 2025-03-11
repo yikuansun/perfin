@@ -81,6 +81,16 @@
         data.balance += quantityReal; // update balance
         data.saveToLocalStorage(); // save after modification
     }
+
+    /**
+     * Delete a transaction from the array
+     * @param {number} transactionIndex
+     */
+    function deleteTransaction(transactionIndex) {
+        data.transactions.splice(transactionIndex, 1);
+        data.saveToLocalStorage();
+        data.transactions = data.transactions; // trigger reactivity
+    }
 </script>
 
 <button on:click={() => { createModalOpen = true; }}>new transaction</button>
@@ -150,5 +160,6 @@
             editModalData["nickName"] = transaction["nickname"];
             editModalOpen = true;
         }}>Edit</button>
+        <button on:click={() => { deleteTransaction(transactionIndex); }}>Delete</button>
     </p>
 {/each}
