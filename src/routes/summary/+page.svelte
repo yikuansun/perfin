@@ -8,8 +8,10 @@
 
     let data = new UserData();
 
+    // Though income and expense are stored in the same array, they are plotted separately in the graph
     /** @type {{ x: string, y: number, timeNumeric: number }[]} */
     let incomeGraphData = [];
+    /** @type {{ x: string, y: number, timeNumeric: number }[]} */
     let expenseGraphData = [];
 
     onMount(() => {

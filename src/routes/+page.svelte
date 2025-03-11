@@ -5,7 +5,6 @@
     import "chart.js/auto";
     import moment from "moment";
     import "chartjs-adapter-moment";
-    import { get } from "svelte/store";
 
     let data = new UserData();
 
@@ -37,7 +36,7 @@
     function getBalance() {
         balance = 0;
         for (let transaction of data.transactions) {
-            balance += transaction.quantity;
+            balance += transaction.quantity; // income/expense baked into value (positive/negative)
         }
     }
 </script>
