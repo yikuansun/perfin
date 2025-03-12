@@ -90,6 +90,9 @@
         data.saveToLocalStorage();
         data.transactions = data.transactions; // trigger reactivity
     }
+
+    // text to filter transactions by
+    let searchQuery = "";
 </script>
 
 <button on:click={() => { createModalOpen = true; }}>new transaction</button>
@@ -145,20 +148,24 @@
 {/if}
 
 <h2>Past transactions</h2>
+<input type="text" bind:value={searchQuery} placeholder="Search transactions by title"
+    style:width="100%" style:box-sizing="border-box" style:font-size="16px" />
 {#each data.transactions as transaction, transactionIndex}
-    <p>
-        {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
-        Date: {transaction["date"]} <br />
-        Transaction type: {(transaction.quantity > 0)?"income":"expense"} <br />
-        Amount: {Math.abs(transaction.quantity)} <br />
-        <button on:click={() => {
-            editModalData["transactionIndex"] = transactionIndex;
-            editModalData["dateString"] = moment(transaction["date"], "MM/DD/YYYY").format("YYYY-MM-DD");
-            editModalData["transactionType"] = (transaction.quantity > 0)?"income":"expense";
-            editModalData["amount"] = Math.abs(transaction.quantity);
-            editModalData["nickName"] = transaction["nickname"];
-            editModalOpen = true;
-        }}>Edit</button>
-        <button on:click={() => { deleteTransaction(transactionIndex); }}>Delete</button>
-    </p>
+    {#if searchQuery == "" || transaction["nickname"].toLowerCase().includes(searchQuery.toLowerCase())}
+        <p>
+            {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
+            Date: {transaction["date"]} <br />
+            Transaction type: {(transaction.quantity > 0)?"income":"expense"} <br />
+            Amount: {Math.abs(transaction.quantity)} <br />
+            <button on:click={() => {
+                editModalData["transactionIndex"] = transactionIndex;
+                editModalData["dateString"] = moment(transaction["date"], "MM/DD/YYYY").format("YYYY-MM-DD");
+                editModalData["transactionType"] = (transaction.quantity > 0)?"income":"expense";
+                editModalData["amount"] = Math.abs(transaction.quantity);
+                editModalData["nickName"] = transaction["nickname"];
+                editModalOpen = true;
+            }}>Edit</button>
+            <button on:click={() => { deleteTransaction(transactionIndex); }}>Delete</button>
+        </p>
+    {/if}
 {/each}
