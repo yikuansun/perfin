@@ -86,6 +86,7 @@
         background-color: #1B1B1B;
         overflow-x: hidden;
         color: azure;
+        font-family: "Roboto", sans-serif;
     }
 
     #mainMobile #navigation {
@@ -134,6 +135,7 @@
         color: azure;
         scrollbar-width: thin;
         scrollbar-color: dimgrey #333333;
+        font-family: "Roboto", sans-serif;
     }
 
     #mainDesktop #content {
@@ -230,4 +232,9 @@
 
     <!-- Prevent zooming -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
 </svelte:head>
