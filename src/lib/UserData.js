@@ -6,10 +6,13 @@ class UserData {
     transactions;
     /** @type {Object[]} */
     recurrences;
+    /** @type {string[]} */
+    tags;
 
     constructor() {
         this.transactions = [];
         this.recurrences = [];
+        this.tags = [];
     }
 
     /**
@@ -19,6 +22,7 @@ class UserData {
         window.localStorage.setItem("dataExists", "true");
         window.localStorage.setItem("transactions", JSON.stringify(this.transactions));
         window.localStorage.setItem("recurrences", JSON.stringify(this.recurrences));
+        window.localStorage.setItem("tags", JSON.stringify(this.tags));
     }
 
     /**
@@ -28,6 +32,7 @@ class UserData {
         if (window.localStorage.getItem("dataExists")) {
             this.transactions = JSON.parse(window.localStorage.getItem("transactions") || "[]");
             this.recurrences = JSON.parse(window.localStorage.getItem("recurrences") || "[]");
+            this.tags = JSON.parse(window.localStorage.getItem("tags") || "[]");
         }
     }
 
@@ -38,6 +43,7 @@ class UserData {
         window.localStorage.removeItem("dataExists");
         window.localStorage.removeItem("transactions");
         window.localStorage.removeItem("recurrences");
+        window.localStorage.removeItem("tags");
     }
 }
 
