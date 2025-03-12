@@ -98,8 +98,6 @@
 
 </script>
 
-<h2>Summary</h2>
-
 View transactions between <br />
 <input type="date" bind:value={selectedStartDate} />
 and <input type="date" bind:value={selectedEndDate} />

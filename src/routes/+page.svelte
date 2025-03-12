@@ -8,23 +8,29 @@
 
     let data = new UserData();
 
-    /** @type {{ x: string, y: number, timeNumeric: number }[]} */
+    /** @type {{ x: string, y: number, }[]} */
     let graphData = [];
 
     onMount(() => {
         data.readFromLocalStorage();
         data = data; // svelte only updates after assignment
 
-        // convert transactions to graphData
-        for (let transaction of data.transactions) {
-            graphData.push({
+        // calculate balance after each transaction, and display it in the graph
+        graphData = [];
+        let balance = 0;
+        for (let transaction of data.transactions.toReversed()) {
+            balance += transaction.quantity; // income/expense baked into value (positive/negative)
+            graphData = [...graphData, {
                 x: moment(transaction.date, "MM/DD/YYYY").format("YYYY-MM-DD"),
-                y: transaction.quantity,
-                timeNumeric: moment(transaction.date, "MM/DD/YYYY").unix(),
-            });
+                y: balance,
+            }];
         }
-        graphData.sort((a, b) => a.timeNumeric - b.timeNumeric); // sort by date
-        graphData = graphData; // svelte only updates after assignment
+        // add current balance at the end of the graph
+        graphData = [...graphData, {
+            x: moment().format("YYYY-MM-DD"), // current date
+            y: balance,
+        }];
+        console.log(graphData);
 
         getBalance();
     });
@@ -43,26 +49,43 @@
 
 <h1>YOUR BALANCE: {balance}</h1>
 
-<div style:width="100%">
-    <Line data={{
-            datasets: [{
-                label: '# of Votes',
-                data: graphData,
-                borderWidth: 1,
-                borderColor: "hotpink",
-            }],
-        }} options={{
-            scales: {
-                x: {
-                    type: "time",
-                    time: {
-                        unit: "day",
-                        displayFormats: { day: "MMM DD" }
+<div style:width="100%" style:margin-bottom="14px">
+    {#if graphData.length > 0}
+        <Line data={{
+                datasets: [{
+                    label: 'Balance',
+                    data: graphData,
+                    borderWidth: 1,
+                    borderColor: "hotpink",
+                }],
+            }} options={{
+                scales: {
+                    x: {
+                        type: "time",
+                        time: {
+                            unit: "day",
+                            displayFormats: { day: "MMM DD" }
+                        },
                     },
+                    /*y: {
+                        beginAtZero: true,
+                    },*/
                 },
-                /*y: {
-                    beginAtZero: true,
-                },*/
-            },
-        }} />
+            }} />
+    {/if}
 </div>
+<a href="/summary"><button>View detailed summary</button></a>
+
+<h2>Recent Transactions</h2>
+<!-- Show the first 5 transactions -->
+{#each data.transactions.slice(0, 5) as transaction}
+    <div style:margin-bottom="14px">
+        {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
+        Date: {transaction["date"]} <br />
+        Transaction type: {(transaction.quantity > 0)?"income":"expense"} <br />
+        Amount: {Math.abs(transaction.quantity)}
+    </div>
+{/each}
+<a href="/transactions">
+    <button>View all transactions</button>
+</a>
