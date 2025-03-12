@@ -74,25 +74,6 @@
         setTimeout(() => { selectedEndDate = moment().format("YYYY-MM-DD"); }, 10);
     });
 
-    /**
-     * Get all transactions in a date range
-     * @param startDate {string} mm/dd/yyyy
-     * @param endDate {string} mm/dd/yyyy
-     * @returns {Array<{ date: string, quantity: number, nickname: string, }>} transactions in the date range
-     */
-    function getTransactionsInDateRange(startDate, endDate) {
-        // convert string to date
-        let startDateObj = new Date(parseInt(startDate.split("/")[2]), parseInt(startDate.split("/")[0]) - 1, parseInt(startDate.split("/")[1]));
-        let endDateObj = new Date(parseInt(endDate.split("/")[2]), parseInt(endDate.split("/")[0]) - 1, parseInt(endDate.split("/")[1]));
-        // get transactions in range
-        let transactionsInRange = data.transactions.filter((transaction) => {
-            let date = transaction["date"].split("/").map((x) => parseInt(x));
-            let transactionDateObj = new Date(date[2], date[0] - 1, date[1]);
-            return (transactionDateObj >= startDateObj && transactionDateObj <= endDateObj);
-        });
-        return transactionsInRange;
-    }
-
     let selectedStartDate = moment().subtract(1, "week").format("YYYY-MM-DD");
     let selectedEndDate = moment().format("YYYY-MM-DD");
 
@@ -118,16 +99,6 @@ and <input type="date" bind:value={selectedEndDate} />
     selectedStartDate = moment().subtract(1, "year").format("YYYY-MM-DD");
     selectedEndDate = moment().format("YYYY-MM-DD");
 }} style:font-size="11px">Last year</button>
-
-<!--<h2>Transactions</h2>
-{#each getTransactionsInDateRange(yyyymmddToMmddyyyy(selectedStartDate), yyyymmddToMmddyyyy(selectedEndDate)) as transaction}
-    <p>
-        {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
-        Date: {transaction["date"]} <br />
-        Transaction type: {(transaction.quantity > 0)?"income":"expense"} <br />
-        Amount: {Math.abs(transaction.quantity)}
-    </p>
-{/each}-->
 
 <h3>Incomes and Expenses in Selected Time Period</h3>
 <div style:width="100%">
