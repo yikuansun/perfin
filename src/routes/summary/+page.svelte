@@ -68,6 +68,10 @@
         });
         balanceGraphData.sort((a, b) => a.timeNumeric - b.timeNumeric);
         balanceGraphData = balanceGraphData; // trigger update in svelte
+
+        // the graph has an issue with reactivity, but we can use this workaround to update the graph
+        selectedEndDate = moment().subtract(1, "day").format("YYYY-MM-DD");
+        setTimeout(() => { selectedEndDate = moment().format("YYYY-MM-DD"); }, 10);
     });
 
     /**
