@@ -30,7 +30,6 @@
             x: moment().format("YYYY-MM-DD"), // current date
             y: balance,
         }];
-        console.log(graphData);
 
         getBalance();
     });
