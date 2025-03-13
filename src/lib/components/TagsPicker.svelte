@@ -33,7 +33,13 @@
             <option value={availableTag}>{availableTag}</option>
         {/each}
         <option value="CREATE_NEW_TAG">Create new tag...</option>
-    </select> <br />
+    </select>
+    <button on:click={() => {
+        selectedTags.splice(i, 1);
+        selectedTags = selectedTags; // svelte only updates after assignment
+    }}>-</button>
+    <br />
 {/each}
+
 <!-- create a new tag -->
 <button on:click={() => { selectedTags = [...selectedTags, ""]; }}>+</button>
