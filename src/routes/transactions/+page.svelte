@@ -200,10 +200,10 @@
 {/if}
 
 <h2>Past transactions</h2>
-<input type="text" bind:value={searchQuery} placeholder="Search transactions by title"
+<input type="text" bind:value={searchQuery} placeholder="Search transactions by title or category"
     style:width="100%" style:box-sizing="border-box" style:font-size="16px" />
 {#each data.transactions as transaction, transactionIndex}
-    {#if searchQuery == "" || transaction["nickname"].toLowerCase().includes(searchQuery.toLowerCase())}
+    {#if searchQuery == "" || transaction["nickname"].toLowerCase().includes(searchQuery.toLowerCase()) || transaction["tag"].toLowerCase().includes(searchQuery.toLowerCase())}
         <p>
             {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
             Date: {transaction["date"]} <br />
