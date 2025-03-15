@@ -2,7 +2,7 @@
  * Store all user data in a comprehensive object, which can be read from or written to local storage in any page of the app.
  */
 class UserData {
-    /** @type {Array.<{ date: string, quantity: number, nickname: string, }>} */
+    /** @type {Array.<{ date: string, quantity: number, nickname: string, tag: string, }>} */
     transactions;
     /** @type {Object[]} */
     recurrences;
