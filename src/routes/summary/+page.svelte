@@ -17,6 +17,9 @@
     /** @type {{ x: string, y: number, timeNumeric: number }[]} */
     let balanceGraphData = [];
 
+    /** @type {{ label: string, data: { x: string, y: number, timeNumeric: number }[], borderWidth: 1, borderColor: string, }[]} */
+    let tagsGraphDatasets = [];
+
     onMount(() => {
         data.readFromLocalStorage();
         data = data; // make sure svelte updates it in the page
@@ -72,6 +75,37 @@
         // the graph has an issue with reactivity, but we can use this workaround to update the graph
         selectedEndDate = moment().subtract(1, "day").format("YYYY-MM-DD");
         setTimeout(() => { selectedEndDate = moment().format("YYYY-MM-DD"); }, 10);
+
+        // calculate tags graph data
+        tagsGraphDatasets = [];
+        for (let i = 0; i < data.tags.length; i++) {
+            let tag = data.tags[i];
+
+            // different color for each tag
+            let lineColor = `hsl(${(i * 360 / data.tags.length)}deg, 50%, 50%)`;
+
+            tagsGraphDatasets = [...tagsGraphDatasets, {
+                label: tag,
+                data: [],
+                borderWidth: 1,
+                borderColor: lineColor,
+            }];
+
+            // add data for each tag
+            for (let transaction of data.transactions) {
+                if (transaction.tag == tag && transaction.quantity < 0) {
+                    tagsGraphDatasets[tagsGraphDatasets.length - 1].data = [...tagsGraphDatasets[tagsGraphDatasets.length - 1].data, {
+                        x: moment(transaction.date, "MM/DD/YYYY").format("YYYY-MM-DD"),
+                        y: Math.abs(transaction.quantity),
+                        timeNumeric: moment(transaction.date, "MM/DD/YYYY").unix(),
+                    }];
+                }
+            }
+
+            // sort tagsGraphDatasets[tagsGraphDatasets.length - 1].data by timeNumeric
+            tagsGraphDatasets[tagsGraphDatasets.length - 1].data.sort((a, b) => a.timeNumeric - b.timeNumeric);
+        }
+        console.log(tagsGraphDatasets)
     });
 
     let selectedStartDate = moment().subtract(1, "week").format("YYYY-MM-DD");
@@ -144,6 +178,28 @@ and <input type="date" bind:value={selectedEndDate} />
                 borderWidth: 1,
                 borderColor: "hotpink",
             }],
+        }} options={{
+            scales: {
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "day",
+                        displayFormats: { day: "MMM DD" }
+                    },
+                    min: selectedStartDate,
+                    max: selectedEndDate,
+                },
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }} />
+</div>
+
+<h3>Expenditures by Category</h3>
+<div style:width="100%">
+    <Line data={{
+            datasets: tagsGraphDatasets,
         }} options={{
             scales: {
                 x: {
