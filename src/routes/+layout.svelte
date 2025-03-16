@@ -25,22 +25,27 @@
         {
             title: "Settings",
             path: "/settings",
+            icon: "settings",
         },
         {
             title: "Transactions",
             path: "/transactions",
+            icon: "receipt",
         },
         {
             title: "Home",
             path: "/",
+            icon: "home",
         },
         {
             title: "Summary",
             path: "/summary",
+            icon: "timeline",
         },
         {
             title: "Help",
             path: "/help",
+            icon: "help",
         },
     ];
 </script>
@@ -54,7 +59,11 @@
         {#each navPages as navItem}
             <a href={navItem.path}
                 style:color={($page.url.pathname == navItem.path)?"hotpink":"grey"}>
-                {navItem.title}
+                <span style:line-height="1.5" style:vertical-align="middle" style:display="inline-block">
+                    <span class="material-symbols-outlined">{navItem.icon}</span>
+                    <br />
+                    {navItem.title}
+                </span>
             </a>
         {/each}
     </div>
@@ -235,8 +244,9 @@
     <!-- Prevent zooming -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <!-- Font from Google Fonts -->
+    <!-- Fonts from Google Fonts - Roboto & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </svelte:head>
