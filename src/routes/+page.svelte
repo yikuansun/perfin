@@ -46,7 +46,7 @@
     }
 </script>
 
-<h1>YOUR BALANCE: {balance}</h1>
+<h1>YOUR BALANCE: ${balance.toFixed(2)}</h1>
 
 <div style:width="100%" style:margin-bottom="14px">
     {#if graphData.length > 0}
