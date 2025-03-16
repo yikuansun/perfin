@@ -104,7 +104,7 @@
     let searchQuery = "";
 </script>
 
-<button on:click={() => { createModalOpen = true; }}>new transaction</button>
+<button on:click={() => { createModalOpen = true; }}>New Transaction</button>
 
 {#if createModalOpen}
     <button class="greywall" transition:fade={{ duration: 250, }}
@@ -114,8 +114,8 @@
         Date: <input type="date" bind:value={createModalData["dateString"]} /> <br />
         Type:
         <select bind:value={createModalData["transactionType"]}>
-            <option>income</option>
-            <option>expense</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
         </select> <br />
         Amount: <input type="number" min={0} max={10000} bind:value={createModalData["amount"]} /> <br />
         Title (optional): <input type="text" bind:value={createModalData["nickName"]} /> <br />
@@ -164,8 +164,8 @@
         Date: <input type="date" bind:value={editModalData["dateString"]} /> <br />
         Type:
         <select bind:value={editModalData["transactionType"]}>
-            <option>income</option>
-            <option>expense</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
         </select> <br />
         Amount: <input type="number" min={0} max={10000} bind:value={editModalData["amount"]} /> <br />
         Title (optional): <input type="text" bind:value={editModalData["nickName"]} /> <br />
@@ -195,7 +195,7 @@
             editTransaction(editModalData["transactionIndex"], editModalData["dateString"], editModalData["amount"], editModalData["transactionType"], editModalData["nickName"], editModalData["tag"]);
             // close modal
             editModalOpen = false;
-        }}>Edit Transaction</button>
+        }}>Save</button>
     </div>
 {/if}
 
@@ -203,12 +203,13 @@
 <input type="text" bind:value={searchQuery} placeholder="Search transactions by title or category"
     style:width="100%" style:box-sizing="border-box" style:font-size="16px" />
 {#each data.transactions as transaction, transactionIndex}
+    <!-- if searching, only show transactions that match search query -->
     {#if searchQuery == "" || transaction["nickname"].toLowerCase().includes(searchQuery.toLowerCase()) || transaction["tag"].toLowerCase().includes(searchQuery.toLowerCase())}
         <p>
             {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
             Date: {transaction["date"]} <br />
             Transaction type: {(transaction.quantity > 0)?"income":"expense"} <br />
-            Amount: {Math.abs(transaction.quantity)} <br />
+            Amount: ${Math.abs(transaction.quantity).toFixed(2)} <br />
             {#if transaction.tag} Category: {transaction.tag} <br /> {/if}
             <button on:click={() => {
                 editModalData["transactionIndex"] = transactionIndex;

@@ -82,7 +82,8 @@
         {#if transaction["nickname"]} <b style:font-size="large">{transaction["nickname"]}</b> <br /> {/if}
         Date: {transaction["date"]} <br />
         Transaction type: {(transaction.quantity > 0)?"income":"expense"} <br />
-        Amount: {Math.abs(transaction.quantity)}
+        Amount: ${Math.abs(transaction.quantity).toFixed(2)} <br />
+        {#if transaction.tag} Category: {transaction.tag} <br /> {/if}
     </div>
 {/each}
 <a href="/transactions">
