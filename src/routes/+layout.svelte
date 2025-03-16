@@ -121,6 +121,8 @@
         /* slight margins */
         box-sizing: border-box;
         padding: 10px;
+        scrollbar-width: thin;
+        scrollbar-color: dimgrey #333333;
     }
 
     #mainDesktop {
