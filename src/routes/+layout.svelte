@@ -98,7 +98,7 @@
         line-height: 50px;
         text-align: center;
         background-color: #222222;
-        box-shadow: 0 0 5px deeppink;
+        box-shadow: 0 4px 14px deeppink;
     }
 
     /* navbar icons */
