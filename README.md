@@ -1,5 +1,10 @@
-# Finance App
-To help you keep track of your finances.
+# Perfin
+Easily track your finances and see your balance at a glance.
+
+## Features
+- Create and edit transactions
+- View transactions by date, category, or title
+- View detailed balance and transactions over time
 
 ## Dependencies
 - SvelteKit - https://kit.svelte.dev/docs/introduction
