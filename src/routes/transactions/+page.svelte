@@ -78,7 +78,6 @@
      */
     function editTransaction(transactionIndex, dateString, amount, type, nickname="", tag="") {
         // expense is treated the same as negative income
-        console.log(tag)
         let quantityReal = amount || 0;
         if (type == "expense") quantityReal *= -1;
         data.transactions[transactionIndex] = {
@@ -141,6 +140,15 @@
             </optgroup>
         </select> <br />
         <button on:click={() => {
+            // validate input
+            if (createModalData["dateString"] == null || createModalData["dateString"] == "" || createModalData["dateString"] == "Invalid date" || createModalData["transactionType"] == null) {
+                alert("Please fill in all fields");
+                return;
+            }
+            if (createModalData["amount"] == null || createModalData["amount"] <= 0) {
+                alert("Amount must be positive");
+                return;
+            }
             // add the transaction to user data
             createTransaction(createModalData["dateString"], createModalData["amount"], createModalData["transactionType"], createModalData["nickName"], createModalData["tag"]);
             // close & reset modal
@@ -191,6 +199,16 @@
             </optgroup>
         </select> <br />
         <button on:click={() => {
+            // validate input
+            if (editModalData["dateString"] == null || editModalData["dateString"] == "" || editModalData["dateString"] == "Invalid date" || editModalData["transactionType"] == null) {
+                alert("Please fill in all fields");
+                return;
+            }
+            if (editModalData["amount"] == null || editModalData["amount"] <= 0) {
+                alert("Amount must be positive");
+                return;
+            }
+            console.log(editModalData["dateString"])
             // add the transaction to user data
             editTransaction(editModalData["transactionIndex"], editModalData["dateString"], editModalData["amount"], editModalData["transactionType"], editModalData["nickName"], editModalData["tag"]);
             // close modal
