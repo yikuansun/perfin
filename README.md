@@ -6,10 +6,16 @@ Easily track your finances and see your balance at a glance.
 - View transactions by date, category, or title
 - View detailed balance and transactions over time
 
-## Dependencies
+## Resources Used
+
+### Dependencies
 - SvelteKit - https://kit.svelte.dev/docs/introduction
 - Chart.js - https://www.chartjs.org/
 - Moment.js - https://momentjs.com/
+
+### Fonts
+- Roboto - https://fonts.google.com/specimen/Roboto
+- Material Symbols - https://fonts.google.com/icons
 
 ## Setup
 
