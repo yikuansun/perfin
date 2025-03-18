@@ -28,3 +28,11 @@ Easily track your finances and see your balance at a glance.
 - Run `npm install`
 - Run `npm run build`
 - To start the server, run `npm run preview`
+
+## Roadmap
+The following are plans for future development:
+- Allow transactions to be categorized by multiple tags
+- Allow the user to save data to an online database
+- Allow the user to import data from bank statements
+- Automate recurring transactions
+- Test Perfin with students at Chapel Hill High School
