@@ -1,3 +1,5 @@
+<!-- The transactions page shows a list of the user's transactions, and allows them to create, edit, and delete transactions -->
+
 <script>
     import { onMount } from "svelte";
     import UserData from "$lib/UserData";

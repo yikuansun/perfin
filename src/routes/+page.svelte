@@ -1,3 +1,5 @@
+<!-- The home page shows the user their balance and a list of their recent transactions -->
+
 <script>
     import { onMount } from "svelte";
     import UserData from "$lib/UserData";

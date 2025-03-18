@@ -1,3 +1,5 @@
+<!-- The settings page shows the user their data and privacy settings -->
+
 <script>
     import { onMount } from "svelte";
     import UserData from "$lib/UserData";

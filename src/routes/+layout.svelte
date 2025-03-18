@@ -1,3 +1,5 @@
+<!-- This is the "shell" of the app, which is rendered around every page. The actual content of the page is rendered in the <slot></slot> tag -->
+
 <script>
     import { onMount } from "svelte";
     import { page } from "$app/stores";
@@ -53,7 +55,7 @@
 {#if layout == "mobile"}
 <div id="mainMobile">
     <div id="content">
-        <slot></slot>
+        <slot></slot> <!-- the actual content of the page is rendered here -->
     </div>
     <div id="navigation">
         {#each navPages as navItem}
@@ -79,7 +81,7 @@
         {/each}
     </div>
     <div id="content">
-        <slot></slot>
+        <slot></slot> <!-- the actual content of the page is rendered here -->
     </div>
 </div>
 {/if}

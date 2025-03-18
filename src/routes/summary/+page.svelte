@@ -1,3 +1,5 @@
+<!-- The summary page shows graphs of the user's income and expenses over time, their balance, and their expenses by category -->
+
 <script>
     import { onMount } from "svelte";
     import UserData from "$lib/UserData";

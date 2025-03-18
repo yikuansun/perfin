@@ -1,3 +1,5 @@
+<!-- The help page is a simple page that shows tutorials and a chatbot -->
+
 <script>
     let chatbotInput = "";
     /** @type {{ question: string, answer: string }[]} */
