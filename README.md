@@ -12,6 +12,7 @@ Easily track your finances and see your balance at a glance.
 - SvelteKit - https://kit.svelte.dev/docs/introduction
 - Chart.js - https://www.chartjs.org/
 - Moment.js - https://momentjs.com/
+- Driver.js - https://driverjs.com/
 
 ### Fonts
 - Roboto - https://fonts.google.com/specimen/Roboto
