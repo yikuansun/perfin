@@ -29,6 +29,18 @@ Easily track your finances and see your balance at a glance.
 - Run `npm run build`
 - To start the server, run `npm run preview`
 
+## Directory Structure
+- `/src` - the source code of the app
+  - `/src/lib` - reusable components
+    - `/src/lib/UserData.js` - stores all user data
+  - `/src/routes` - pages of the app
+    - `/src/routes/+page.svelte` - the home page
+    - `/src/routes/+layout.svelte` - the global layout of the app
+    - `/src/routes/transactions/+page.svelte` - the transactions page
+    - `/src/routes/summary/+page.svelte` - the summary page
+    - `/src/routes/settings/+page.svelte` - the settings page
+    - `/src/routes/help/+page.svelte` - the help page
+
 ## Roadmap
 The following are plans for future development:
 - Allow transactions to be categorized by multiple tags
