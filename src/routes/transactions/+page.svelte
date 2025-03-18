@@ -208,7 +208,6 @@
                 alert("Amount must be positive");
                 return;
             }
-            console.log(editModalData["dateString"])
             // add the transaction to user data
             editTransaction(editModalData["transactionIndex"], editModalData["dateString"], editModalData["amount"], editModalData["transactionType"], editModalData["nickName"], editModalData["tag"]);
             // close modal

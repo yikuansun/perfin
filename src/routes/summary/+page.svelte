@@ -105,7 +105,6 @@
             // sort tagsGraphDatasets[tagsGraphDatasets.length - 1].data by timeNumeric
             tagsGraphDatasets[tagsGraphDatasets.length - 1].data.sort((a, b) => a.timeNumeric - b.timeNumeric);
         }
-        console.log(tagsGraphDatasets)
     });
 
     let selectedStartDate = moment().subtract(1, "week").format("YYYY-MM-DD");
