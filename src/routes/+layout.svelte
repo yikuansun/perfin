@@ -185,7 +185,7 @@
         background-color: dimgrey;
     }
 
-    :global(input[type=text], input[type=number], input[type=date], select) {
+    :global(input[type=text], input[type=number], input[type=date], select, input[type=search]) {
         background-color: #111111;
         color: azure;
         padding: 5px 10px;

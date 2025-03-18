@@ -5,6 +5,10 @@
     import "chart.js/auto";
     import moment from "moment";
     import "chartjs-adapter-moment";
+    import { driver } from "driver.js";
+    import "driver.js/dist/driver.css";
+    import { page } from "$app/stores";
+    import { goto } from "$app/navigation";
 
     let data = new UserData();
 
@@ -105,11 +109,32 @@
             // sort tagsGraphDatasets[tagsGraphDatasets.length - 1].data by timeNumeric
             tagsGraphDatasets[tagsGraphDatasets.length - 1].data.sort((a, b) => a.timeNumeric - b.timeNumeric);
         }
+
+        // show tutorial if user navigated from help menu
+        if ($page.url.searchParams.get("tutorial") == "true") {
+            helpTutorial.drive();
+        }
     });
 
     let selectedStartDate = moment().subtract(1, "week").format("YYYY-MM-DD");
     let selectedEndDate = moment().format("YYYY-MM-DD");
 
+    // shown if user navigated from help menu
+    let helpTutorial = driver({
+        showProgress: true,
+        steps: [
+            { element: "input[type=date]", popover: { title: "Set Start Date", description: "Use this box to set the start date of the graph.", side: "right", align: 'start' }},
+            { element: "input[type=date]:nth-of-type(2)", popover: { title: "Set End Date", description: "Use this box to set the end date of the graph.", side: "right", align: 'start' }},
+            { element: "#incomeExpenseGraphContainer", popover: { title: "Analyze Your Income and Expenses", description: "This graph shows your income and expenses over time.", side: "bottom", align: 'start' }},
+            { element: "#balanceGraphContainer", popover: { title: "Analyze Your Balance", description: "This graph shows your total balance over time.", side: "bottom", align: 'start' }},
+            { element: "#tagsGraphContainer", popover: { title: "Analyze Your Expenses by Category", description: "This graph shows expenses by category over time.", side: "bottom", align: 'start' }},
+        ],
+        onDestroyStarted: () => {
+            helpTutorial.destroy();
+            // if user closes/completes tutorial, go back to help page
+            goto("/help");
+        }
+    });
 </script>
 
 View transactions between <br />
@@ -134,7 +159,7 @@ and <input type="date" bind:value={selectedEndDate} />
 }} style:font-size="11px">Last year</button>
 
 <h3>Incomes and Expenses in Selected Time Period</h3>
-<div style:width="100%">
+<div style:width="100%" id="incomeExpenseGraphContainer">
     <Line data={{
             datasets: [
                 {
@@ -169,7 +194,7 @@ and <input type="date" bind:value={selectedEndDate} />
 </div>
 
 <h3>Balance Over Time</h3>
-<div style:width="100%">
+<div style:width="100%" id="balanceGraphContainer">
     <Line data={{
             datasets: [{
                 label: "Balance",
@@ -196,7 +221,7 @@ and <input type="date" bind:value={selectedEndDate} />
 </div>
 
 <h3>Expenditures by Category</h3>
-<div style:width="100%">
+<div style:width="100%" id="tagsGraphContainer">
     <Line data={{
             datasets: tagsGraphDatasets,
         }} options={{

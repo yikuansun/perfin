@@ -3,12 +3,21 @@
     import UserData from "$lib/UserData";
     import { fade, slide } from "svelte/transition";
     import moment from "moment";
+    import { driver } from "driver.js";
+    import "driver.js/dist/driver.css";
+    import { page } from "$app/stores";
+    import { goto } from "$app/navigation";
 
     let data = new UserData();
 
     onMount(() => {
         data.readFromLocalStorage();
         data = data; // make sure svelte updates it in the page
+
+        // show tutorial if user navigated from help menu
+        if ($page.url.searchParams.get("tutorial") == "true") {
+            helpTutorial.drive();
+        }
     });
 
     let createModalOpen = false;
@@ -101,6 +110,20 @@
 
     // text to filter transactions by
     let searchQuery = "";
+
+    // shown if user navigated from help menu
+    let helpTutorial = driver({
+        showProgress: true,
+        steps: [
+            { element: "button", popover: { title: "Create New Transaction", description: "Press this button to make a new transaction.", side: "right", align: 'start' }},
+            { element: "input[type=search]", popover: { title: "Filter Transactions", description: "Type in this box to filter transactions by title or category.", side: "bottom", align: 'start' }},
+        ],
+        onDestroyStarted: () => {
+            helpTutorial.destroy();
+            // if user closes/completes tutorial, go back to help page
+            goto("/help");
+        }
+    });
 </script>
 
 <button on:click={() => { createModalOpen = true; }}>New Transaction</button>
@@ -217,7 +240,7 @@
 {/if}
 
 <h2>Past transactions</h2>
-<input type="text" bind:value={searchQuery} placeholder="Search transactions by title or category"
+<input type="search" bind:value={searchQuery} placeholder="Search transactions by title or category"
     style:width="100%" style:box-sizing="border-box" style:font-size="16px" />
 {#each data.transactions as transaction, transactionIndex}
     <!-- if searching, only show transactions that match search query -->
