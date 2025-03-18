@@ -238,7 +238,11 @@
                 editModalData["tag"] = transaction["tag"];
                 editModalOpen = true;
             }}>Edit</button>
-            <button on:click={() => { deleteTransaction(transactionIndex); }}>Delete</button>
+            <button on:click={() => {
+                if (confirm("Are you sure you want to delete this transaction?")) {
+                    deleteTransaction(transactionIndex);
+                }
+            }}>Delete</button>
         </p>
     {/if}
 {/each}
